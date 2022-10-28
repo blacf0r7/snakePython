@@ -2,6 +2,8 @@
 # from turtle import color
 import pygame 
 import time
+from random import randint
+
 
 # Инициализация библиотеки pygame
 pygame.init()
@@ -14,15 +16,27 @@ red = (255, 0, 0)
 # 
 dis_width = 800
 dis_height  = 400
+
+print(randint(0, dis_width))
+
+min_Width = 500
+min_Height = 400
+
 dis = pygame.display.set_mode((dis_width, dis_height))
 pygame.display.set_caption('Моя первая игра в змейку')
 
 game_over = False
- 
-x1 = dis_width / 2
+#  начальное положение
+x1 = (dis_width - min_Width)/4 
 y1 = dis_height / 2
 snake_block = 10
  
+x2 = (dis_width - min_Width)/2
+x3 = dis_width - x2
+# Координаты высоты
+y2 = (dis_height - min_Height)/2
+y3 = dis_height - y2
+
 x1_change = 0
 y1_change = 0
  
@@ -51,10 +65,9 @@ while not game_over:
             elif event.key == pygame.K_DOWN:
                 y1_change = snake_block
                 x1_change = 0
- 
-    if x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0:
-        game_over = True
- 
+#  Условия Проигрыша
+    if ((x1>x2 and x1<x3) and (y1>y2 and y1<y3)):
+        game_over =True
     x1 += x1_change
     y1 += y1_change
     dis.fill(white)
