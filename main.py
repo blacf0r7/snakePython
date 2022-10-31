@@ -29,6 +29,8 @@ game_over = False
 #  начальное положение
 x1 = (dis_width - min_Width)/4 
 y1 = dis_height / 2
+
+# Размер змейки
 snake_block = 10
  
 x2 = (dis_width - min_Width)/2
@@ -71,8 +73,10 @@ while not game_over:
     x1 += x1_change
     y1 += y1_change
     dis.fill(white)
+
+    # Для добавления используем метод draw
     pygame.draw.rect(dis, black, [x1, y1, snake_block, snake_block])
- 
+    
     pygame.display.update()
  
     clock.tick(snake_speed)
