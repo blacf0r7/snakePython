@@ -2,11 +2,14 @@
 # from turtle import color
 import pygame 
 import time
-from random import *
-
+from random import randint
 
 # Инициализация библиотеки pygame
 pygame.init()
+
+
+dis_width = 800
+dis_height  = 400
 
 # Объявление переменных для цвета
 white = (100, 255, 255)
@@ -16,8 +19,7 @@ red = (255, 0, 0)
 green = (120, 100, 50)
 
 # 
-dis_width = 800
-dis_height  = 400
+red = (255,0,0)
 
 print(randint(0, dis_width))
 
@@ -25,6 +27,7 @@ min_Width = 500
 min_Height = 400
 
 dis = pygame.display.set_mode((dis_width, dis_height))
+
 pygame.display.set_caption('Моя первая игра в змейку')
 
 game_over = False
@@ -33,13 +36,13 @@ x1 = (dis_width - min_Width)/4
 y1 = dis_height / 2
 
 # Размер змейки
-snake_block = 10
+snake_block = 20
 
 x1_change = 0
 y1_change = 0
  
 clock = pygame.time.Clock()
-snake_speed = 10
+snake_speed = 5
  
 # Яблоко
 x_apple = 0
@@ -51,6 +54,7 @@ apple_size = 30
 count = 0
 countStr = ''
 
+
 def randomApple(x_apple,y_apple):
     x_apple = randint(0, dis_width)
     y_apple = randint(0, dis_height)
@@ -58,10 +62,12 @@ def randomApple(x_apple,y_apple):
     return x_apple, y_apple
 
 font_style = pygame.font.SysFont(None, 50)
-def message(msg,color):
+# Функция вывода сообщения
+def message(msg, color, x, y):
     mesg = font_style.render(msg, True, color)
-    dis.blit(mesg, [dis_width/2-100, dis_height/2-20])
- 
+    dis.blit(mesg, [x, y])
+
+
 while not game_over:
 
     for event in pygame.event.get():
@@ -80,6 +86,9 @@ while not game_over:
             elif event.key == pygame.K_DOWN:
                 y1_change = snake_block
                 x1_change = 0
+            elif event.key == pygame.K_SPACE:
+                y1_change = 0
+                x1_change = 0
      
 #  Условия Проигрыша
     if ((x1 > dis_width or x1 < 0) or (y1 > dis_height or y1 < 0)):
@@ -92,6 +101,10 @@ while not game_over:
     pygame.draw.rect(dis, black, [x1, y1, snake_block, snake_block])
     pygame.draw.rect(dis, green, [x_apple, y_apple, apple_size, apple_size], 50)
 
+
+    if changeColor != 255:
+        
+
     # Рисуем яблоко
     if(apple == False):
         x_apple = randint(0, dis_width)
@@ -100,13 +113,13 @@ while not game_over:
         apple = True
 
     # Проверка на столкновение координат
-    if(((x_apple < x1) and (x_apple+apple_size > x1)) and ((y_apple < y1) and ((y_apple+apple_size) > y1))):
-        x_apple = randint(0, dis_width)
-        y_apple = randint(0, dis_height)
+    if(((x_apple < x1) and (x_apple+apple_size > x1)) and ((y_apple < y1) and ((y_apple+apple_size) > y1)) or ((x_apple < x1+snake_block) and (x_apple+apple_size > x1+snake_block)) and ((y_apple < y1) and ((y_apple+apple_size) > y1)) or ((x_apple < x1) and (x_apple+apple_size > x1)) and ((y_apple < y1+snake_block) and ((y_apple+apple_size) > y1+snake_block)) or ((x_apple < x1+snake_block) and (x_apple+apple_size > x1+snake_block)) and ((y_apple < y1+snake_block) and ((y_apple+apple_size) > y1+snake_block))):
+        x_apple = randint(apple_size, dis_width-apple_size)
+        y_apple = randint(apple_size, dis_height-apple_size)
         count+=1
         snake_speed +=1
     countStr = str(count)
-    message(countStr, red)
+    message(countStr, red, 10, 100)
     pygame.display.update()
     
     clock.tick(snake_speed)
@@ -118,3 +131,5 @@ time.sleep(2)
  
 pygame.quit()
 quit()
+
+

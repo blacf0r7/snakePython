@@ -22,4 +22,5 @@
 #     time.sleep(2)
 #     gameOver = gameOver + 1
 
-
+a = [1] + [1]
+print(a)
