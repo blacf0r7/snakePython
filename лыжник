@@ -1,0 +1,42 @@
+import time
+time.sleep(2.5)
+from random import randint
+
+
+hp = 100
+v = 0
+s = 0
+total_s = 1000
+rock = 1
+yeti = 2
+neighbour = 3
+chance = randint(0,50)
+
+while True:
+    if hp <= 0:
+        print("Зачем нюк банили?")
+        break
+    if s >= total_s:
+        print("не пикал нюк")
+        break
+    v = v + 1
+    print("скорость :", v)
+    s = s + v
+    print("ты кже пролетел:", s)
+    chance = randint(0, 50)
+    if chance == rock:
+        hp = hp - 3
+        print("ты столкнулся с камнем")
+    elif chance == yeti:
+        hp = hp - 10
+        print("ты столкнулся с йети")
+    elif chance == neighbour:
+        hp = hp - 50
+        print("ты столкнулся с соседом")
+    else:
+        hp = hp - 0
+    print("hp", hp)
+    if chance == rock or chance == yeti or chance == neighbour:
+        v = 0
+    else:
+        hp = hp
